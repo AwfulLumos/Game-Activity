@@ -1,64 +1,87 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
 import { useGame } from "./GameContext";
 
 const GameScreen = () => {
   const { board, turn, winner, handleMove, resetGame } = useGame();
 
   return (
-    <View style={styles.screen}>
-      <Text style={styles.status}>
-        {winner ? "Game Over" : `Turn: ${turn}`}
-      </Text>
+    <ImageBackground
+    source={require("../assets/bg.png")}
+      style={styles.background}
+    >
+      <View style={styles.overlay}>
+        <Text style={styles.status}>
+          {winner ? "Game Over" : `Turn: ${turn}`}
+        </Text>
 
-      <View style={styles.board}>
-        {board.map((cell, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.cell}
-            onPress={() => !cell && !winner && handleMove(index)}
-          >
-            <Text
-              style={[
-                styles.cellText,
-                { color: cell === "X" ? "#e74c3c" : "#3498db" },
-              ]}
+        <View style={styles.board}>
+          {board.map((cell, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.cell}
+              onPress={() => !cell && !winner && handleMove(index)}
             >
-              {cell}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-
-      {winner && (
-        <View style={styles.winnerContainer}>
-          <Text style={winner === "Draw" ? styles.drawText : styles.winnerText}>
-            {winner === "Draw" ? "It's a Draw!" : `Winner: ${winner}`}
-          </Text>
-          <TouchableOpacity style={styles.button} onPress={resetGame}>
-            <Text style={styles.buttonText}>Play Again</Text>
-          </TouchableOpacity>
+              <Text
+                style={[
+                  styles.cellText,
+                  { color: cell === "X" ? "#e74c3c" : "#3498db" },
+                ]}
+              >
+                {cell}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
-      )}
 
-      {!winner && (
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: "#e74c3c" }]}
-          onPress={resetGame}
-        >
-          <Text style={styles.buttonText}>Restart Game</Text>
-        </TouchableOpacity>
-      )}
-    </View>
+        {winner && (
+          <View style={styles.winnerContainer}>
+            <Text
+              style={winner === "Draw" ? styles.drawText : styles.winnerText}
+            >
+              {winner === "Draw" ? "It's a Draw!" : `Winner: ${winner}`}
+            </Text>
+            <TouchableOpacity style={styles.button} onPress={resetGame}>
+              <Text style={styles.buttonText}>Play Again</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {!winner && (
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: "#e74c3c" }]}
+            onPress={resetGame}
+          >
+            <Text style={styles.buttonText}>Restart Game</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  screen: {
+background: {
+  flex: 1,
+  width: "100%",
+  height: "100%",
+  resizeMode: "cover", // You can try "contain" or "stretch" too
+  justifyContent: "center",
+  alignItems: "center",
+},
+  overlay: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "rgba(255, 255, 255, 0.3)", // Semi-transparent overlay
+    width: "100%",
+    height: "100%",
   },
   status: {
     fontSize: 22,

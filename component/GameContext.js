@@ -30,9 +30,9 @@ export const GameProvider = ({ children }) => {
 
     newBoard.forEach((cell, index) => {
       if (cell === null) {
-        newBoard[index] = "O"; 
+        newBoard[index] = "O";
         let score = minimax(newBoard, 0, false);
-        newBoard[index] = null; 
+        newBoard[index] = null;
 
         if (score > bestScore) {
           bestScore = score;
@@ -47,7 +47,7 @@ export const GameProvider = ({ children }) => {
   const minimax = (newBoard, depth, isMaximizing) => {
     let result = evaluateBoard(newBoard);
     if (result !== 0) return result;
-    if (!newBoard.includes(null)) return 0; 
+    if (!newBoard.includes(null)) return 0;
 
     if (isMaximizing) {
       let bestScore = -Infinity;
@@ -95,7 +95,7 @@ export const GameProvider = ({ children }) => {
       }
     }
 
-    return 0; 
+    return 0;
   };
 
   const handleMove = (index) => {

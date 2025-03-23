@@ -4,11 +4,21 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 const HomeScreen = ({ navigation }) => (
   <View style={styles.screen}>
     <Text style={styles.title}>Tic-Tac-Toe</Text>
+
+    {/* Navigate to Multiplayer.js */}
     <TouchableOpacity
       style={styles.button}
-      onPress={() => navigation.navigate("Game")}
+      onPress={() => navigation.navigate("Multiplayer")}
     >
-      <Text style={styles.buttonText}>Start Game</Text>
+      <Text style={styles.buttonText}>Multiplayer</Text>
+    </TouchableOpacity>
+
+    {/* Navigate to GameScreen.js with computer mode */}
+    <TouchableOpacity
+      style={styles.button}
+      onPress={() => navigation.navigate("Game", { mode: "computer" })}
+    >
+      <Text style={styles.buttonText}>Play vs Computer</Text>
     </TouchableOpacity>
   </View>
 );
@@ -31,8 +41,13 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 8,
+    marginVertical: 10,
   },
-  buttonText: { color: "white", fontSize: 18, fontWeight: "600" },
+  buttonText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "600",
+  },
 });
 
 export default HomeScreen;
